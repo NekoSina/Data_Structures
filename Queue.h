@@ -7,6 +7,7 @@ class Queue{
     int index;
     int front;
     void Queue_roll();
+    void Resize();
     public:
     Queue();
     Queue(int n);
