@@ -5,9 +5,9 @@ Queue::Queue(){
 
 }
 Queue::Queue(int n){
-    _size = n;
-    Arr = new int[_size];
-    for (int i = 0; i < _size; i++)
+    size = n;
+    Arr = new int[size];
+    for (int i = 0; i < size; i++)
     {
         Arr[i] = 0;
     }
@@ -16,14 +16,32 @@ Queue::Queue(int n){
 }
 void Queue::Enqueue(int data){
     std::cout<<"Enqueue() started for member "<<data<<" with index "<<index<<std::endl;
-    if (index < _size){
+    if (index < size){
         Arr[index] = data;
         std::cout<<"Arr["<<index<<"] = "<<data<<std::endl;
         index++;
     }
     else
     {
-        std::cerr<<"arr is full"<<std::endl;
+        std::cerr<<"lets resize array AND add the last number to queue"<<std::endl;
+        int* copy = new int[size];
+        for (size_t i = 0; i < size; i++)
+        {
+            copy[i] = Arr[i];
+        }
+        Arr = new int[size*2];
+        for (size_t i = 0; i < size*2; i++)
+        {   
+            if(i < size){
+                Arr[i] = copy[i];
+            }
+            else{
+                Arr[i] = 0;
+            }
+        }
+        size = size *2;
+        Arr[index] = data;
+        index ++; 
     }
     Print();
 }
@@ -32,7 +50,7 @@ int Queue::DeQueue(){
     return front;
 }
 void Queue::Queue_roll(){
-    for(int n = _size-1; n >= 0; n --){
+    for(int n = size-1; n >= 0; n --){
         if(n == n -1){
             front = Arr[n];
             std::cout<<"front is now "<<front<<std::endl;
@@ -48,9 +66,9 @@ void Queue::Queue_roll(){
     Print();
 }
 void Queue::Print(){
-    for (int i = 0; i < _size; i++)
+    for (int i = 0; i < size; i++)
     {   
-        if(i != _size - 1){
+        if(i != size - 1){
             std::cout<<Arr[i]<<",";
         }
         else{
